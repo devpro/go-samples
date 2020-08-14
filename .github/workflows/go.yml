@@ -1,4 +1,4 @@
-name: Go
+name: ci
 
 on:
   push:
@@ -32,6 +32,11 @@ jobs:
 
     - name: Build
       run: go build -v ./cmd/helloworld
+      
+    - name: Lint
+      uses: golangci/golangci-lint-action@v1
+      with:
+        version: v1.29
 
     # - name: Test
     #  run: go test -v .
