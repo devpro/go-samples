@@ -1,6 +1,6 @@
 # go-samples
 
-![Go](https://github.com/devpro/go-samples/workflows/Go/badge.svg)
+![CI](https://github.com/devpro/go-samples/workflows/ci/badge.svg)
 
 This repository holds samples of Go code, it is intended to be as simple and clean as possible, following any best practices available.
 
