@@ -1,6 +1,6 @@
 # go-samples
 
-![CI](https://github.com/devpro/go-samples/workflows/ci/badge.svg)
+[![CI](https://github.com/devpro/go-samples/actions/workflows/ci.yml/badge.svg)](https://github.com/devpro/go-samples/actions/workflows/ci.yml)
 
 This repository holds samples of Go code, it is intended to be as simple and clean as possible, following any best practices available.
 
@@ -18,12 +18,8 @@ Name | Type | Action
 go build ./cmd/helloworld
 ```
 
-- Execute
+- Execute (on Linux
 
 ```bash
 hello
 ```
-
-## What are the references
-
-- [Everyday cheatsheets > Go](https://github.com/devpro/everyday-cheatsheets/edit/master/docs/go.md)
