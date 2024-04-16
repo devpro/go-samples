@@ -6,9 +6,9 @@ This repository holds samples of Go code, it is intended to be as simple and cle
 
 ## What is included
 
-Name | Type | Action
----- | ---- | ------
-**Hello world** | cmd | Display Hello world program
+ Name            | Type | Action
+-----------------|------|-----------------------------
+ **Hello world** | cmd  | Display Hello world program
 
 ## How to build and run locally
 
@@ -18,8 +18,8 @@ Name | Type | Action
 go build ./cmd/helloworld
 ```
 
-- Execute (on Linux
+- Execute in Windows terminal
 
 ```bash
-hello
+helloworld.exe
 ```
