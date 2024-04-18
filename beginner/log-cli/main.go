@@ -19,18 +19,21 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
+
 	defer func(file *os.File) {
 		err := file.Close()
 		if err != nil {
 			log.Fatal(err)
 		}
 	}(file)
+
 	reader := bufio.NewReader(file)
 	for {
 		line, err2 := reader.ReadString('\n')
 		if err2 != nil {
 			break
 		}
+
 		if strings.Contains(line, *level) {
 			fmt.Println(line)
 		}

@@ -17,6 +17,9 @@ go build
 Execute the program
 
 ```bash
+# Linux terminal
+helloworld
+
 # Windows terminal
-hello-world.exe
+helloworld.exe
 ```
