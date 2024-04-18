@@ -12,20 +12,20 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  GOLANGCILINT_VERSION: "v1.50.1"
+  GOLANGCILINT_VERSION: "v1.57.2"
 
 jobs:
   build:
       runs-on: ubuntu-latest
       steps:
         - name: Checkout git repository
-          uses: actions/checkout@v4     # https://github.com/actions/checkout
+          uses: actions/checkout@v4         # ref: https://github.com/actions/checkout
         - name: Install Go
-          uses: actions/setup-go@v5     # https://github.com/actions/setup-go
+          uses: actions/setup-go@v5         # ref: https://github.com/actions/setup-go
           with:
             go-version: '~1.22'
         - name: Build Go projects
-          # use a file to know if the build failed
+          # hack: use a file to know if the build failed
           run: |
             ROOT_DIR=$(pwd) \
             find . -name go.mod -execdir sh -c 'go build ./... || touch $ROOT_DIR/build_failed.txt' \; ; \
@@ -34,16 +34,9 @@ jobs:
           run: find . -name go.mod -execdir go mod tidy \;
         - name: Check Go code format
           run: find . -name go.mod -execdir go fmt ./... \; && git status && [[ -z `git status -s` ]]
-        # https://github.com/golangci/golangci-lint-action can't be used on several directories
-        - name: Install Go linter
+        # hack: https://github.com/golangci/golangci-lint-action can't be used on several directories
+        - name: Install Go linter           # ref: https://golangci-lint.run/welcome/install/#other-ci
           run: curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin ${GOLANGCILINT_VERSION}
         - name: Lint Go projects
-          run: |
-            ROOT_DIR=$(pwd)
-            for directory in beginner/*
-            do
-              cd $directory
-              golangci-lint run -v
-              cd $ROOT_DIR
-            done
-          # TODO: add tests
+          run: find . -name go.mod -execdir golangci-lint run -v -c ../../.golangci.yaml \;
+        # TODO: add tests
