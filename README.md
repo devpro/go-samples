@@ -6,6 +6,8 @@ This repository holds samples of Go code, it is intended to be as simple and cle
 
 ## What is included
 
-Name                                             | Type | Action
--------------------------------------------------|------|----------------------------
-[**Hello world**](beginner/helloworld/README.md) | cmd  | Display Hello world program
+### Beginner projects
+
+* [Hello world](beginner/helloworld/README.md)
+* [Log CLI](beginner/log-cli/README.md)
+* [Static web service](beginner/static-webservice/README.md)

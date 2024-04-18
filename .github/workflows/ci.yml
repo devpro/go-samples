@@ -18,38 +18,32 @@ jobs:
   build:
       runs-on: ubuntu-latest
       steps:
-      - name: Checkout git repository
-        uses: actions/checkout@v3
-      - name: Install Go
-        uses: actions/setup-go@v3
-        with:
-          go-version: 1.22
-      - name: Get dependencies
-        run: |
-          go get -v -t -d ./...
-          if [ -f Gopkg.toml ]; then
-              curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
-              dep ensure
-          fi
-      - name: Build Go projects
-        run: |
-          ROOT_DIR=$(pwd)
-          for directory in beginner/*
-          do
-            cd $directory
-            go build -v
-            cd $ROOT_DIR
-          done
-      # https://github.com/golangci/golangci-lint-action can't be used on several directories
-      - name: Install Go linter
-        run: curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin ${GOLANGCILINT_VERSION}
-      - name: Lint Go projects
-        run: |
-          ROOT_DIR=$(pwd)
-          for directory in beginner/*
-          do
-            cd $directory
-            golangci-lint run -v
-            cd $ROOT_DIR
-          done
-        # TODO: add tests
+        - name: Checkout git repository
+          uses: actions/checkout@v4     # https://github.com/actions/checkout
+        - name: Install Go
+          uses: actions/setup-go@v5     # https://github.com/actions/setup-go
+          with:
+            go-version: '~1.22'
+        - name: Build Go projects
+          # use a file to know if the build failed
+          run: |
+            ROOT_DIR=$(pwd) \
+            find . -name go.mod -execdir sh -c 'go build ./... || touch $ROOT_DIR/build_failed.txt' \; ; \
+            test ! -f build_failed.txt
+        - name: Load and check Go dependencies
+          run: find . -name go.mod -execdir go mod tidy \;
+        - name: Check Go code format
+          run: find . -name go.mod -execdir go fmt ./... \; && git status && [[ -z `git status -s` ]]
+        # https://github.com/golangci/golangci-lint-action can't be used on several directories
+        - name: Install Go linter
+          run: curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin ${GOLANGCILINT_VERSION}
+        - name: Lint Go projects
+          run: |
+            ROOT_DIR=$(pwd)
+            for directory in beginner/*
+            do
+              cd $directory
+              golangci-lint run -v
+              cd $ROOT_DIR
+            done
+          # TODO: add tests

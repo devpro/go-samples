@@ -16,3 +16,8 @@
 
 # JetBrains IDE local configuration
 .idea/
+
+# Project binaries
+helloworld
+log-cli
+static-webservice
