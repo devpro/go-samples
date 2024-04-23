@@ -18,6 +18,7 @@
 .idea/
 
 # Project binaries
+codecrafters-redis
 helloworld
 log-cli
 static-webservice
