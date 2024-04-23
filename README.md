@@ -8,6 +8,7 @@ This repository holds samples of Go code, it is intended to be as simple and cle
 
 ### Beginner projects
 
+* [CodeCrafters Redis](beginner/codecrafters-redis/README.md)
 * [Hello world](beginner/helloworld/README.md)
 * [Log CLI](beginner/log-cli/README.md)
 * [Static web service](beginner/static-webservice/README.md)
